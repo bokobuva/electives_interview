@@ -1,0 +1,17 @@
+.input-spinner-container{
+    height: 64px;
+    margin: 0 20px;
+    display: flex;
+    gap: 16px;
+    padding: 12px;
+}
+
+.input-spinner-container:not(:last-child){
+    border-bottom: 1px solid lightgray;
+}
+
+input {
+    max-width: 30px;
+    border: none;
+    text-align: center;
+}

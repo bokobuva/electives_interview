@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const stringOne = '10.2.3.5';
+        const stringTwo = '2.3.8.4';
+
+        function findDuplicates(string1, string2) {//O((n+n)^2)
+            const array1 = string1.split('.');
+            const array2 = string2.split('.');
+            const duplicates = [];
+            for(let i = 0; i < array1.length; i++) {
+                for(let j = 0; j < array2.length; j++) {
+                    if (parseInt(array1[i]) === parseInt(array2[j])) {
+                        duplicates.push(array1[i]);
+                    }
+                }
+            }
+
+            return duplicates.length > 0 ? duplicates : 'No duplicates';
+        }
+
+        function filterDuplicates(string1, string2) {//O(N^2)
+            
+            const array1 = string1.split('.');
+            const array2 = string2.split('.');
+
+            const duplicates = array1.filter((firstNumber)=> array2.includes(firstNumber));
+
+            return duplicates;
+        }
+
+        console.log(filterDuplicates(stringOne, stringTwo));
+    </script>
+</body>
+</html>

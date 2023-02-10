@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Spinners</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html, body{
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            place-items: center;
+        }
+
+        body > div {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+
+        body > div > div {
+            width: 90%;
+            height: 64px;
+            margin: 0 auto;
+            display: flex;
+            gap: 16px;
+            padding: 12px;
+        }
+
+        body > div > div > input {
+            max-width: 30px;
+            border: none;
+            text-align: center;
+        }
+        
+        body > div > div:not(:last-child){
+            border-bottom: 1px solid lightgray;
+        }
+
+        .button {
+            border: none;
+            border-radius: 50%;
+            width: 47px;
+            height: 40px;
+            background-color: #82CC62;
+            font-size: 22px;
+            font-weight: 400;
+            color: white;
+        }
+
+        .button:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+        <div id='hour-inputs-container'>
+            <button id="hour-decrement-button" class="button">-</button>
+            <input type="text" id="hour-value" value="0"/>
+            <button id="hour-increment-button" class="button">+</button>
+        </div>
+        <div id='minutes-inputs-container'>
+            <button id="minutes-decrement-button" class="button">-</button>
+            <input type="text" id="minutes-value" value="0"/>
+            <button id="minutes-increment-button" class="button">+</button>
+        </div>
+
+    </div>
+    <h4>The angle between the hands of the clock is: <span id="angle-result">0</span> degrees</h4>
+    <script>
+        //hour elements
+        let hourDecrementBtn = document.querySelector('#hour-decrement-button');
+        let hourIncrementBtn = document.querySelector('#hour-increment-button');
+        let hourInput = document.querySelector('#hour-value');
+
+        //minute elements
+        let minuteDecrementBtn = document.querySelector('#minutes-decrement-button');
+        let minuteIncrementBtn = document.querySelector('#minutes-increment-button');
+        let minutesInput = document.querySelector('#minutes-value');
+
+        //angle between span element
+        let angleBetweenElement = document.querySelector('#angle-result');
+
+        const inputChangeHandler = (direction, input, min, max) => {//O(n)
+            inputNumericValue = parseInt(input.value);
+            if (direction === '+' && inputNumericValue < max) {
+                input.value = inputNumericValue + 1;
+            } else if (direction === '-' && inputNumericValue > min) {
+                input.value = inputNumericValue - 1;
+            }
+            calculateAngleBetweenHands()
+        }
+
+        const calculateHandAngle = (handValue, fractions) => {//O(1)
+            return 360 / fractions * handValue;
+        }
+
+        const calculateAngleBetweenHands = () => {
+            let anglesArray = [calculateHandAngle(hourInput.value, 12), calculateHandAngle(minutesInput.value, 60)].sort((a, b)=> a-b);//O(n)
+            angleBetweenElement.innerText = anglesArray[1] - anglesArray[0];
+        }
+
+        hourDecrementBtn.addEventListener('click', ()=> inputChangeHandler('-', hourInput, 0, 11));
+        hourIncrementBtn.addEventListener('click', ()=> inputChangeHandler('+', hourInput, 0, 11));
+        minuteDecrementBtn.addEventListener('click', ()=> inputChangeHandler('-', minutesInput, 0, 59));
+        minuteIncrementBtn.addEventListener('click', ()=> inputChangeHandler('+', minutesInput, 0, 59));
+    </script>
+</body>
+</html>

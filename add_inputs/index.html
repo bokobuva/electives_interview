@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form {
+            max-width: 400px;
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <h3>Title</h3>
+        <p>Description</p>
+        <button type="button" id="add-inputs-button">Add 2 more Inputs</button>
+        <button type="submit" id="submit-btn">Log values</button>
+    </form>
+    <script>
+        const form = document.querySelector('#form');
+        const addInputsBtn = document.querySelector('#add-inputs-button');
+        const submitBtn = document.querySelector('#submit-btn');
+
+        function submitHandler(e){//O(n)
+            const formData = new FormData(form);
+            e.preventDefault();
+            
+            for (const value of formData.values()) {
+                console.log(`${value}\n`);
+            }
+        }
+
+        function appendNewInputs () {//O(10)
+            for(let i = 0; i < 2; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = form.childNodes.length;
+                form.appendChild(input);
+            }
+        };
+
+        appendNewInputs()
+
+        addInputsBtn.addEventListener('click', appendNewInputs);
+        form.addEventListener('submit', submitHandler);
+    </script>
+</body>
+</html>
